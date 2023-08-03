@@ -47,8 +47,9 @@ class Crawler():
         self._cache = dict()
         self.tasks = []
 
-    def _async_retry(func, retries=3, delay=1, exceptions=(ConnectionError,), backoff=2):
+    def _async_retry(func, retries=3, exceptions=(ConnectionError,), backoff=2):
         async def wrapper(*args, **kwargs):
+            delay = 1
             for _ in range(retries + 1):
                 try:
                     return await func(*args, **kwargs)
@@ -68,12 +69,12 @@ class Crawler():
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as r:
                     if r.status==200:
-                        msg = f'Gathered {url}'
+                        msg = f'Crawler requested to {url}'
                         self.logger.info(msg)
                         self._cache[url] = await r.text()
                         return self._cache[url]
                     elif r.status==503:
-                        msg = f'Access denied to {url}'
+                        msg = f'Access denied to {url}. Code 503'
                         self.logger.error(msg)
                         raise ConnectionError(msg)
                     else:
@@ -210,6 +211,9 @@ class Crawler():
         print('Report'.center(20, '-'))
         print('Gathered: ', len(res))
         print('Time (s): ', round(_end-_start, 3))
+
+        msg = f'Crawler finished. Gathered {len(res)} for {round(_end-_start, 3)} s.'
+        self.logger.info(msg)
 
 if __name__=='__main__':
     crwl = Crawler(max_reviews=5, max_pages=1, output_fn='sample.json')

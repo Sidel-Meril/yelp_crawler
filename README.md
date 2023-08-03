@@ -84,9 +84,24 @@ python run.py -cn 'Contractors' -l 'San Francisco, CA' -o 'output.json'
 
 The example output is [provided](/output.json)
 
-**Note:** If any error occurred, you can check [api.log](/_api.log) for
+**Note:** If any error occurred, you can check ```api.log``` file for
 additional explanation. The most common problem is the 503 Access Denied 
-code.
+code:
+```
+%
+There is sample of wrong execution
+%
+
+023-08-03 19:49:08,151 - ERROR - Access denied to https://www.yelp.com/search?find_desc=Contractors&find_loc=San+Francisco%2C+CA&start=0. Code 503
+
+```
+In successful case you would receive
+```
+2023-08-03 19:54:11,453 - INFO - Crawler requested to https://www.yelp.com/search?find_desc=Contractors&find_loc=San+Francisco%2C+CA&start=0
+2023-08-03 19:54:11,833 - INFO - Estimated count of pages for Contractors in San Francisco, CA: 24
+...
+2023-08-03 19:54:36,869 - INFO - Crawler finished. Gathered 239 for 22.167 s.
+```
 
 ## License
 
