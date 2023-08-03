@@ -84,6 +84,10 @@ python run.py -cn 'Contractors' -l 'San Francisco, CA' -o 'output.json'
 
 The example output is [provided](/output.json)
 
+**Note:** If any error occurred, you can check [api.log](/api.log) for
+additional explanation. The most common problem is the 503 Access Denied 
+code.
+
 ## License
 
 Lorem Ipsum
